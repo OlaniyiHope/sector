@@ -33,7 +33,7 @@ export default function FormDialog() {
         };
 
         const response = await axios.get(
-          "http://localhost:4000/api/get-user", // Update the endpoint
+          "https://sector-05cccf9c7ccc.herokuapp.com/api/get-user", // Update the endpoint
           { headers: headers }
         );
 
@@ -51,7 +51,7 @@ export default function FormDialog() {
         }
 
         const sectorsResponse = await axios.get(
-          "http://localhost:4000/api/get-sectors",
+          "https://sector-05cccf9c7ccc.herokuapp.com/api/get-sectors",
           { headers: headers }
         );
         setSectors(sectorsResponse.data);
@@ -163,7 +163,7 @@ export default function FormDialog() {
 
       const response = isEditMode
         ? await axios.put(
-            `http://localhost:4000${apiEndpoint}`,
+            `https://sector-05cccf9c7ccc.herokuapp.com${apiEndpoint}`,
             {
               username: formData.username,
               email: formData.email,
@@ -172,7 +172,7 @@ export default function FormDialog() {
             { headers: headers }
           )
         : await axios.post(
-            `http://localhost:4000${apiEndpoint}`,
+            `https://sector-05cccf9c7ccc.herokuapp.com${apiEndpoint}`,
             {
               username: formData.username,
               email: formData.email,

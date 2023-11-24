@@ -7,7 +7,9 @@ const SectorList = () => {
 
   useEffect(() => {
     const fetchSectors = async () => {
-      const response = await axios.get("http://localhost:4000/api/get-sectors");
+      const response = await axios.get(
+        "https://sector-05cccf9c7ccc.herokuapp.com/api/get-sectors"
+      );
       setSectors(response.data);
     };
 

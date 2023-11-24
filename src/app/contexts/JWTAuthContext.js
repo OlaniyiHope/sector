@@ -85,10 +85,13 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post("http://localhost:4000/api/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://sector-05cccf9c7ccc.herokuapp.com/api/login",
+        {
+          email,
+          password,
+        }
+      );
       console.log("Response data:", response.data);
       const { token, user } = response.data;
 
@@ -119,11 +122,14 @@ export const AuthProvider = ({ children }) => {
 
     password
   ) => {
-    const response = await axios.post("http://localhost:4000/api/register", {
-      username,
-      email,
-      password,
-    });
+    const response = await axios.post(
+      "https://sector-05cccf9c7ccc.herokuapp.com/api/register",
+      {
+        username,
+        email,
+        password,
+      }
+    );
 
     const { token, user } = response.data;
 
