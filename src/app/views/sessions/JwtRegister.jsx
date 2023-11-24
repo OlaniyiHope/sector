@@ -45,10 +45,8 @@ const JWTRegister = styled(JustifyBox)(() => ({
 const initialValues = {
   email: "",
   password: "",
-  fullname: "",
-  company_name: "",
-  phone: "",
-  address: "",
+  username: "",
+
   remember: true,
 };
 
@@ -73,11 +71,10 @@ const JwtRegister = () => {
 
     try {
       register(
-        values.fullname,
-        values.company_name,
+        values.username,
+
         values.email,
-        values.phone,
-        values.address,
+
         values.password
       );
       navigate("/");
@@ -134,32 +131,15 @@ const JwtRegister = () => {
                       fullWidth
                       size="small"
                       type="text"
-                      name="fullname"
-                      label="Full Name"
+                      name="username"
+                      label="User Name"
                       variant="outlined"
                       onBlur={handleBlur}
-                      value={values.fullname}
-                      id="fullname"
+                      value={values.username}
+                      id="username"
                       onChange={handleChange}
-                      helperText={touched.fullname && errors.fullname}
-                      error={Boolean(errors.fullname && touched.fullname)}
-                      sx={{ mb: 3 }}
-                    />
-                    <TextField
-                      fullWidth
-                      size="small"
-                      type="text"
-                      name="company_name"
-                      label="Company Name"
-                      variant="outlined"
-                      onBlur={handleBlur}
-                      value={values.company_name}
-                      onChange={handleChange}
-                      id="company_name"
-                      helperText={touched.company_name && errors.company_name}
-                      error={Boolean(
-                        errors.company_name && touched.company_name
-                      )}
+                      helperText={touched.username && errors.username}
+                      error={Boolean(errors.username && touched.username)}
                       sx={{ mb: 3 }}
                     />
 
@@ -181,20 +161,34 @@ const JwtRegister = () => {
 
                     <TextField
                       fullWidth
-                      select
-                      label="Select a class"
+                      size="small"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      label="Password"
                       variant="outlined"
-                      name="classname" // Make sure the name matches your form field
-                      // value={values.classname}
-                      // onChange={handleChange}
-                      sx={{ mb: 3 }}
-                    >
-                      <MenuItem value="Class 1">Class 1</MenuItem>
-                      <MenuItem value="Class 2">Class 2</MenuItem>
-                      <MenuItem value="Class 3">Class 3</MenuItem>
-                      {/* Add more MenuItem components as needed */}
-                    </TextField>
-
+                      onBlur={handleBlur}
+                      value={values.password}
+                      onChange={handleChange}
+                      helperText={touched.password && errors.password}
+                      error={Boolean(errors.password && touched.password)}
+                      sx={{ mb: 1.5 }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              onClick={() => setShowPassword(!showPassword)}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
                     <FlexBox gap={1} alignItems="center">
                       <Checkbox
                         size="small"

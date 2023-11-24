@@ -150,23 +150,36 @@ export default function FormDialog() {
 
     try {
       const token = localStorage.getItem("jwtToken");
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
+      const headers = { Authorization: `Bearer ${token}` };
+      let apiEndpoint;
 
-      const apiEndpoint = isEditMode
-        ? "http://localhost:4000/api/update-user" // Update the endpoint
-        : "http://localhost:4000/api/add-user-sector"; // Update the endpoint
+      if (isEditMode) {
+        // Update an existing user
+        apiEndpoint = "/api/update-user";
+      } else {
+        // Add a new user
+        apiEndpoint = "/api/add-user-sector";
+      }
 
-      const response = await axios.put(
-        apiEndpoint,
-        {
-          username: formData.username,
-          email: formData.email,
-          selectedSectors: formData.selectedSectors,
-        },
-        { headers: headers }
-      );
+      const response = isEditMode
+        ? await axios.put(
+            `http://localhost:4000${apiEndpoint}`,
+            {
+              username: formData.username,
+              email: formData.email,
+              selectedSectors: formData.selectedSectors,
+            },
+            { headers: headers }
+          )
+        : await axios.post(
+            `http://localhost:4000${apiEndpoint}`,
+            {
+              username: formData.username,
+              email: formData.email,
+              selectedSectors: formData.selectedSectors,
+            },
+            { headers: headers }
+          );
 
       setFormData({
         username: response.data.username,
@@ -175,16 +188,17 @@ export default function FormDialog() {
         agreeToTerms: formData.agreeToTerms,
       });
 
-      toast.success(
-        isEditMode ? "Data updated successfully!" : "Data stored successfully!",
-        {
-          position: toast.POSITION.TOP_RIGHT,
-        }
-      );
+      const successMessage = isEditMode
+        ? "Data updated successfully!"
+        : "Data stored successfully!";
+
+      toast.success(successMessage, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
 
       handleClose();
     } catch (error) {
-      console.error("Error storing/updating data:", error);
+      console.error(`Error storing/updating data: ${error.message}`);
       toast.error("Error storing/updating data. Please try again.", {
         position: toast.POSITION.TOP_RIGHT,
       });
